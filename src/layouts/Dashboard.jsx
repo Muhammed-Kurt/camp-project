@@ -5,6 +5,8 @@ import { Grid, GridColumn, GridRow } from 'semantic-ui-react'
 import { Route, Routes } from 'react-router-dom'
 import ProductDetail from '../pages/ProductDetail'
 import CartDetail from '../pages/CartDetail'
+import { ToastContainer } from 'react-toastify'
+import ProductAdd from '../pages/ProductAdd'
 
 export default function Dashboard() {
 
@@ -13,6 +15,7 @@ export default function Dashboard() {
   */
   return (
     <div>
+      <ToastContainer position="bottom-right"/> {/*react toastify'ın container'ını ekledik*/}
       <Grid >
         <GridRow>
           <GridColumn width={4}>
@@ -26,8 +29,8 @@ export default function Dashboard() {
               <Route exect path="/products" Component={ProductList}/>
               <Route path="/products/:title/:id" Component={ProductDetail}/>
               <Route path="/cart" Component={CartDetail}/>
+              <Route path="/product/add" Component={ProductAdd}/>
             </Routes>
-
           </GridColumn>
         </GridRow>
       </Grid>

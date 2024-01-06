@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Icon, Menu, Table } from "semantic-ui-react";
+import { Icon, Menu, Table, Button } from "semantic-ui-react";
 import ProductService from "../services/productService";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../store/actions/cartActions";
+import {toast} from "react-toastify";
 
 export default function ProductList() {
+
+  const dispatch = useDispatch() //useDispatch fonksiyon çağırmak için kullanılır.
+
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -12,9 +18,14 @@ export default function ProductList() {
     .then(result => setProducts(result.data.products));
   }, [])
 
+  const handleAddToCart = (product)=>{
+    dispatch(addToCart(product))
+    toast.success(`${product.title} sepete eklendi.`)
+  }
+
   /*
     <Table.Cell><Link to={``}>{product.title}</Link></Table.Cell> 
-    // AltGr + , => `` => Bu işaret stringleri birleştiriyor(stringler arasında + kullanmamıza gerek kalmıyor.)
+    AltGr + , =>Template Literal(` `); stringleri birleştiriyor(stringler arasında + kullanmamıza gerek kalmıyor.)
   */
   return (
     <div>
@@ -26,16 +37,20 @@ export default function ProductList() {
             <Table.HeaderCell>Stok Adedi</Table.HeaderCell>
             <Table.HeaderCell>Açıklama</Table.HeaderCell>
             <Table.HeaderCell>Kategori</Table.HeaderCell>
+            <Table.HeaderCell></Table.HeaderCell>
           </Table.Row>
         </Table.Header>
 
         <Table.Body>
           {products.map((product) => (
             <Table.Row key={product.id}>
-              <Table.Cell><Link to={`/products/${product.title}/${product.id}`}>{product.title}</Link></Table.Cell>
+              <Table.Cell><Link to={`/products/${product.title}/${product.id}`}>
+                {product.title}</Link>
+              </Table.Cell>
               <Table.Cell>{product.price}</Table.Cell>
               <Table.Cell>{product.stock}</Table.Cell>
               <Table.Cell>{product.category}</Table.Cell>
+              <Table.Cell><Button onClick={()=>handleAddToCart(product)}>Sepete Ekle</Button></Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>

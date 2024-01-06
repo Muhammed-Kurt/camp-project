@@ -17,11 +17,14 @@ export default function ProductDetail() {
       <Card.Group>
         <Card fluid>
           <Card.Content>
-            {product.images && product.images.length > 0 && (
+            {/* {product.images && product.images.length > 0 && (
               <Image floated="right" 
               size="mini" 
               src={product.images[0]} />
-            )}
+            )} */}
+            <Image floated="right" 
+              size="mini" 
+              src={`https://i.dummyjson.com/data/products/${id}/3.jpg`} />
             <Card.Header>{product.title}</Card.Header>
             <Card.Meta>{product.category}</Card.Meta>
             <Card.Description>{product.description}</Card.Description>
